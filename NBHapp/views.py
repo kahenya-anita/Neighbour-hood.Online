@@ -4,7 +4,11 @@ from .forms import *
 from django.contrib.auth import login, authenticate
 from .models import *
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate, logout
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
+
+@unauthenticated_user
 def register(request):
     form = CreateUserForm()
     if request.method == 'POST':
@@ -19,6 +23,7 @@ def register(request):
     return render(request , 'registration/registration_form.html', context)
     return render(request, 'registration/register.html')
 
+@unauthenticated_user
 def login(request):
     if request.method == 'POST':
         emailAddress = request.POST.get('username')
@@ -33,10 +38,13 @@ def login(request):
     context = {}
     return render(request, 'registration/login.html', context)
 
-def logout(request):
+@login_required(login_url='login')
+def logoutUser(request):
     logout(request)
     return redirect('login')
 
+
+@login_required(login_url='registration/login/')
 def User(request):
     try:
         user =requests.get('https://api/v1/user/list_all').json()
@@ -54,9 +62,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-
-
-# view functions below
+@login_required(login_url='registration/login/')
 def hood(request):
     try:
         neighbourhood =requests.get('https://api/v1/neighbourhood/list_all').json()
@@ -70,6 +76,7 @@ def hood(request):
 
 
 # creating neighbourhood
+@login_required(login_url='registration/login/')
 def create_neighbourhood(request):
     try:
         all_neighbourhood = requests.get('http://api/v1/neighbourhood/list_all').json() 
@@ -96,6 +103,7 @@ def create_neighbourhood(request):
 
 
 # creating single neigbourhood
+@login_required(login_url='registration/login/')
 def single_neighbourhood(request, neighbourhood_id):
     singleNeighbourhood = requests.get('http://api/v1/neighbourhood/find'.format(neighbourhood_id)).json()
     singleBusiness = requests.get('http://api/v1/business/list_all').json()
@@ -123,6 +131,7 @@ def single_neighbourhood(request, neighbourhood_id):
     }
     return render(request, 'eachhood.html', context)
 
+@login_required(login_url='registration/login/')
 def Neighbourhood_Delete(request,user_id):
     neighbourhood = requests.get('https://api/v1/neighbourhood/find'.format(neighbourhood_id)).json() 
     print(neighbourhood) 
@@ -163,6 +172,7 @@ def create_post(request, neighbourhood_id):
 
 # ======Business View
 # creating Businesses
+@login_required(login_url='registration/login/')
 def create_business(request, business_id):
     business = Business.objects.get(id=business_id) # without endpoint
     business = requests.get('http://api/v1/business/create'.format(business_id)).json()
@@ -185,6 +195,7 @@ def create_business(request, business_id):
     return render(request, 'Bizz/New_bizz.html', context)
 
 # update  business function
+@login_required(login_url='registration/login/')
 def Business_update(request,business_id):
     business = requests.get('http://api/v1/business/find'.format(business_id)).json() 
     url ='https://api/v1/business/update '
@@ -197,6 +208,7 @@ def Business_update(request,business_id):
     }
 
 #Delete business function
+@login_required(login_url='registration/login/')
 def Business_Delete(request,user_id):
     user = requests.get('https://api/v1/business/find'.format(business_id)).json() 
     print(user) 
