@@ -95,7 +95,7 @@ def create_hood(request):
             return redirect('hood')
         else:
             return False
-    return render(request, 'hood.html', 'form':NeighbourHoodForm, 'form_s':HoodForm)
+    return render(request, 'hood.html', {'form':NeighbourHoodForm, 'form_s':HoodForm})
     
 
 # creating single neigbourhood
