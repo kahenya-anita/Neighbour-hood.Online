@@ -15,6 +15,7 @@ class NeighbourhoodForm(forms.ModelForm):
     class Meta:
         model = Neighbourhood
         fields = ['name', 'description', 'location', 'population', 'image']
+
 class Hood(forms.ModelForm):
     class Meta:
         model = Hood
@@ -23,13 +24,13 @@ class Hood(forms.ModelForm):
 
 class UpdateProfileForm(ModelForm):
     class Meta:
-        model = UserProfile
-        fields = ('first_name','last_name','location')
+        model = Profile
+        fields = ('name','hood')
 
 class AddBusinessForm(ModelForm):
     class Meta:
         model = Business
-        fields = ('name','email','business_location')
+        fields = ('name','email','neighbourhood')
 
 class PostForm(ModelForm):
     class Meta:

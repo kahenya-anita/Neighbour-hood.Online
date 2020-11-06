@@ -64,7 +64,7 @@ class Business(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name=models.CharField(max_length=60, null=True)
     description=models.CharField(max_length=400, null=True)
-    neighborhood=models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
+    neighbourhood=models.ForeignKey('Neighbourhood' ,on_delete=models.CASCADE)
     email=models.EmailField()
     image = CloudinaryField( null = True, blank = True)
 
@@ -77,7 +77,7 @@ class Business(models.Model):
     def delete_business(self):
         self.delete()
         
-     @classmethod
+    @classmethod
     def find_business(cls,business_id):
         business = cls.objects.get(id=business_id)
         return business
@@ -89,14 +89,14 @@ class Business(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=40)
-    post_description = HTMLField()
+    post_description = models.CharField(max_length=50)
     posted_by = models.ForeignKey(User,on_delete=models.CASCADE)
-    neighborhood = models.ForeignKey('Neighborhood',on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey('Neighbourhood',on_delete=models.CASCADE)
     posted_on = models.DateTimeField(auto_now_add=True)
     image= CloudinaryField(default='default.jpg')
 
     def __str__(self):
-        return f'{self.title},{self.neighborhood.neighborhood_name}'
+        return f'{self.title},{self.neighbourhood.neighbourhood_name}'
 
     def save_post(self):
         self.save

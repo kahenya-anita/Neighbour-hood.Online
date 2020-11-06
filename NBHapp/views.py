@@ -53,9 +53,27 @@ def logoutUser(request):
     return redirect('login')
 
 # ============ Profile page
-def userPage(request):
-    context = {}
-    return render(request, 'profile.html', context)
+def userPage(request, user_id):
+    user = User.objects.get(id = user_id)
+    profile = UserProfile.objects.filter(user = user).first()
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST,instance=profile)
+        if form.is_valid():
+            profile.name = request.POST['name']
+            profile.bio = request.POST['bio']
+            profile.hood = request.POST['hood']
+            profile.image = request.POST['image']
+
+            profile.save()
+        return redirect(reverse('profile',args=[user.id]))
+    else:
+        form = UpdateProfileForm(instance=profile)
+
+    businesses = Business.objects.filter(owner = user).all()
+    neighborhoods = Neighborhood.objects.all()
+
+    return render(request,'profile.html',{'neighborhoods':neighborhoods,'businesses':businesses,'profile':profile,'form':form})
+
 
 # ============ Home Page
 def home(request):
@@ -114,12 +132,13 @@ def add_biz(request):
     return render(request,'Bizz/New_biz.html',{'business_form':business_form})
 
 ## ==Change Hood
-def change_neighborhood(request,neighborhood_id):
-    profile = UserProfile.objects.filter(user = request.user).first()
-    neighborhood = Neighborhood.objects.get(id=neighborhood_id)
-    profile.neighborhood = neighborhood
-    profile.save()
-    return redirect(reverse('neighborhood',args=[neighborhood.id]))
+# @login_required
+# def change_neighbourhood(request,neighbourhood_id):
+#     profile = UserProfile.objects.filter(user = request.user).first()
+#     neighbourhood = Neighbourhood.objects.get(id=id)
+#     profile.hood = neighbourhood
+#     profile.save()
+#     return redirect(reverse('hood',args=[neighbourhood.id]))
 
 ## =====Search Bizz
 def search(request):

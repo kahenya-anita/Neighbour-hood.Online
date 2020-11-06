@@ -50,15 +50,15 @@
                     <div class="text-center">
                         <div class="col-4 offset-4 ">
                             <h1>Welcome to NHood<i class="fas fa-home"></i></h1>
-                            <h3 class="">Type in</h3>
-                            <form class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+                            <h3 class="">A little bit of loud & a whole lot of LOVE</h3>
+                            <form class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2" role="search"  action="{% url 'search' %}">
                                 <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Neighbourhood" name="username">
                                 <i class="fas fa-search" aria-hidden="true"></i>
                             </form>
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="#view"><button type="button" class="btn btn-outline-info waves-effect">Search</button></a>
+                        <a href="#"><button type="button" class="btn btn-outline-info waves-effect" >Search</button></a>
                     </div>
                 </div>
             </div>
@@ -70,8 +70,8 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-start">
             <a href=" {% url 'home' %} ">
-                <!--Light blue-->
-                <button type="button" class="btn btn-light-blue">Back</button>
+                
+                <button type="button" class="btn btn-light-blue">Home</button>
             </a>
         </div>
         <div class="row">
@@ -119,16 +119,16 @@
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 ">
                             <h6 class="text-uppercase mb-4 font-weight-bold ">The Hood</h6>
                             <p>
-                                <a href="#! ">Businesses</a>
+                                <a href="{% url 'profile' request.user.id %} ">My Profile</a>
                             </p>
                             <p>
                                 <a href="#! ">Emergency Contacts</a>
                             </p>
                             <p>
-                                <a href="#! ">Neighbourhoods</a>
+                                <a href="{% url 'hood' %} ">Neighbourhoods</a>
                             </p>
                             <p>
-                                <a href="#! ">Welcome to the Hoods</a>
+                                <a href="{% url 'logout' %}">Logout</a>
                             </p>
                         </div>
                         <!-- Grid column -->
@@ -139,13 +139,13 @@
                         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
                             <h6 class="text-uppercase mb-4 font-weight-bold ">Useful links</h6>
                             <p>
-                                <a href="{% url 'user-page' %}">Your Account</a>
+                                <a href="#">Change Neighbourhood</a>
                             </p>
                             <p>
-                                <a href="#! ">Become an Affiliate</a>
+                                <a href="{% url 'profile' request.user.id %} ">Update Profile</a>
                             </p>
                             <p>
-                                <a href="#! ">Shipping Rates</a>
+                                <a href="#! ">Payment Rates</a>
                             </p>
                             <p>
                                 <a href="#! ">Help</a>
@@ -182,7 +182,7 @@
 
                             <!--Copyright-->
                             <p class="text-center text-md-left ">© 2020 Copyright:
-                                <a href="https://mdbootstrap.com/ ">
+                                <a href="# ">
                                     <strong> ANITA-that-chiq</strong>
                                 </a>
                             </p>

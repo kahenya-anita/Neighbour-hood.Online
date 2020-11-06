@@ -9,18 +9,17 @@ urlpatterns = [
     path('register/logout/', views.logoutUser, name = 'logout'),
     
     path('', views.home, name = 'home'),
-    path('user/', views.userPage, name = 'user-page'),
     
     path('hood/', views.hood, name = 'hood'),
-    path('add_bizz/', views.create_business, name = 'add_bizz'),
-    path('change_neighborhood/<int:id>/',views.change_neighborhood,name='change_neighborhood'),
+    path('add_biz/', views.add_biz, name = 'add_biz'),
+    #path('change_neighbourhood/<int:id>/',views.change_neighbourhood, name='change_neighborhood'),
 
 
     path('estate/<int:id>/', views.estate, name = 'each-hood'),
     
 
-    path('profile/', views.userPage, name = 'user-page')
-    path('search/',views.search,name='search'),
+    path('userPage/<int:id>/', views.userPage, name = 'profile'),
+    path('search/', views.search, name = 'search'),
 
 ]
 
