@@ -9,3 +9,12 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        
+class NeighbourhoodForm(forms.ModelForm):
+    class Meta:
+        model = Neighbourhood
+        fields = ['name', 'description', 'location', 'population', 'image']
+class Hood(forms.ModelForm):
+    class Meta:
+        model = Hood
+        fields = '__all__'

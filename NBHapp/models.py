@@ -9,7 +9,8 @@ from cloudinary.models import CloudinaryField
 # Null = True --> Allows us to make changes into our database, 
 # Allows to import customer with maybe just a name and no phone or email or date created. 
 # If null is not set to true There will be an error and we will be forced to add a defult value.
-
+class Hood(models.Model):
+    image_1 = CloudinaryField('image')
 class Neighbourhood(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name=models.CharField(max_length=60, null=True)
@@ -17,6 +18,7 @@ class Neighbourhood(models.Model):
     location=models.CharField(max_length=200, null=True)
     population=models.IntegerField()
     image = models.CloudinaryField(upload_to = 'images/', null = True, blank = True)
+    hoods = models.ForeignKey(Hood, on_delete=models.CASCADE, related_name='neighbourhood_images')
 
     def __str__(self):
         return self.name

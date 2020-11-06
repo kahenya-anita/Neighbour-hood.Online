@@ -68,6 +68,7 @@ def hood(request):
 
 
 # =========== For Each neighbour hood
+@login_required
 def estate(request, id):
     neighbourhoods = Neighbourhood.objects.get(id =id)
     businessa = Business.objects.get(id =id)
@@ -76,6 +77,11 @@ def estate(request, id):
     context = {'hood': hood,'businessa':businessa, 'neighbourhoods':neighbourhoods}
     return render(request, 'eachhood.html', context)
 
+#=========Creating a Neighbourhood
+@login_required
+def create_hood(request):
+    
+    
 
 # creating single neigbourhood
 # @login_required(login_url='registration/login/')
