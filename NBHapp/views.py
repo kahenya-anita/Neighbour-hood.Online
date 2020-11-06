@@ -98,49 +98,22 @@ def create_hood(request):
             return False
     return render(request, 'hood.html', {'form':NeighbourHoodForm, 'form_s':HoodForm})
     
+@login_required(login_url='registration/login/')
+def add_biz(request):
+    user = User.objects.filter(id = request.user.id).first()
+    profile = UserProfile.objects.filter(user = user).first()
+    if request.method == 'POST':
+        business_form = AddBusinessForm(request.POST)
+        if business_form.is_valid():
+            business = Business(name = request.POST['name'],owner = user,business_neighborhood = profile.neighborhood,email=request.POST['email'])
+            business.save()
+        return redirect('eachhood.html')
+    else:
+        business_form = AddBusinessForm()
+    return render(request,'biz.html',{'business_form':business_form})
+     
 
-# creating single neigbourhood
-# @login_required(login_url='registration/login/')
-# def single_neighbourhood(request, neighbourhood_id):
-#     singleNeighbourhood = requests.get('http://api/v1/neighbourhood/find'.format(neighbourhood_id)).json()
-#     singleBusiness = requests.get('http://api/v1/business/list_all').json()
 
-#     business = Business.objects.filter(neighbourhood=singleNeighbourhood)
-#     new_post = Post.objects.filter(singleNeighbourhood=singleNeighbourhood)
-#     new_post = new_post[::-1]
-#     if request.method == 'POST':
-#         form = BusinessForm(request.POST)
-#         data = {}
-#         if form.is_valid():
-#             data = form.data
-#             post_neighbourhood = json.dumps(data)
-#             requests.post('https://api/v1/neighbourhood/create', post_neighbourhood)
-#             print(post_neighbourhood)
-#             messages.success(request, 'New Neighbourhood was added Successfully')
-#             return redirect('neighbourhood')
-#         else:
-#             form = BusinessForm()
-#     context = {
-#         'singleNeighbourhood': singleNeighbourhood,
-#         'business': business,
-#         'form': form,
-#         'new_post': new_post
-#     }
-#     return render(request, 'eachhood.html', context)
-
-# @login_required(login_url='registration/login/')
-# def Neighbourhood_Delete(request,user_id):
-#     neighbourhood = requests.get('https://api/v1/neighbourhood/find'.format(neighbourhood_id)).json() 
-#     print(neighbourhood) 
-#     url ='https://api/v1/neighbourhood/delete' 
-#     neigbourhood['neighbourhood_id']= neighbourhood_id;
-#     post_data = json.dumps(user)
-#     print("\n see which hood i want to delete \n" + post_data)
-#     requests.Delete(url, post_data)
-#     return HttpResponseRedirect('hood.html') 
-#     context = {
-#         'neighbourhood':neighbourHood
-#     }
 
 
 # #====POSTS

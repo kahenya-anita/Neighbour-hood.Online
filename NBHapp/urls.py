@@ -11,11 +11,14 @@ urlpatterns = [
     path('', views.home, name = 'home'),
     path('user/', views.userPage, name = 'user-page'),
     path('hood/', views.hood, name = 'hood'),
+    path('create_businee/', views.create_business, name = 'bizz'),
+
     path('estate/<int:id>/', views.estate, name = 'each-hood'),
     
 
     path('profile/', views.userPage, name = 'user-page')
-    
+    path('search/',views.search,name='search'),
+
 ]
 
 if settings.DEBUG:
