@@ -1,4 +1,4 @@
-# NEIGHBOUR-HOD.ONLINE
+# NEIGHBOUR-HOOD.ONLINE
 *****
 ### Author : ANITA KAHENYA 6th Nov 2020
 ****
@@ -7,6 +7,13 @@ If you are like me, You really don’t know what is happening in your neighborho
 
 This is a web application that allows you to be in the loop about everything happening in your neighborhood. From contact information of different handyman to meeting announcements or even alerts.
 ******
+
+## SCREENSHOT
+![Screenshot from 2020-11-06 15-15-41](https://user-images.githubusercontent.com/62019551/98365188-1577c300-2043-11eb-9a89-2285008e2227.png)
+
+
+![Screenshot from 2020-11-06 15-10-42](https://user-images.githubusercontent.com/62019551/98364851-8c608c00-2042-11eb-8452-fad3be93e2a2.png)
+
 ## API-Endpoints
 ### User Controller
 [/api/v1/User/register](https:///api/v1/User/register)
@@ -20,14 +27,7 @@ This is a web application that allows you to be in the loop about everything hap
 6. Location
 7. URL
 
-### Project Posted
-[https://coding-awwards.herokuapp.com/api/projects](https://coding-awwards.herokuapp.com/api/projects)
-* This endpoint return information pertaining to all the projects posted in the application such as:
-1. Project Screenshots
-2. Project Name
-3. Description
-4. Date Posted
-5. Upvotes
+
 ********
 ## SetUp Instruction
 ### Requirements
@@ -35,6 +35,8 @@ This is a web application that allows you to be in the loop about everything hap
 * [Django](https://www.djangoproject.com/)
 * Text editor eg [Visual Studio Code](https://code.visualstudio.com/download)
 * [Postman](https://www.postman.com/downloads/)
+
+
 ### Getting Files
 * Fork the repo
 - Create a new branch in your terminal (git checkout -b improve-feature)
@@ -53,7 +55,7 @@ To install all requirements
 Then run server with the above command
 *****
 ## Live Link
-Or you can access the web application directly via this [LINK.](/)
+Or you can access the web application directly via this [LINK.](/https://anitanbh.herokuapp.com/)
 *****
 ## Dependencies
 Django-Heroku

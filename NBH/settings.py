@@ -55,10 +55,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 cloudinary.config(
-    cloud_name = 'dsoltjf12',
-    api_key = '381748421442872',
-    api_secret = '9PTjvOSMcaa22_cCSlpx3m8sa0I',
+    cloudinary_name = config('CLOUDINARY_CLOUD_NAME'), 
+    api_key = config('CLOUDINARY_API_KEY'), 
+    api_secret = config('CLOUDINARY_API_SECRET'), 
 )
+
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
