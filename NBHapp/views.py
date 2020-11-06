@@ -56,6 +56,10 @@ def userPage(request):
     context = {}
     return render(request, 'profile.html', context)
 
+# ============ Home Page
+def home(request):
+    return render(request, 'home.html')
+
 
 @login_required(login_url='registration/login/')
 def User(request):
