@@ -36,10 +36,10 @@ def admin_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'tenant':
-            return redirect('user-page')
+            return redirect('hood')
         elif group == 'admin':
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('user-page')# <- return response here (possibly a redirect to login page?)
+            return redirect('login')# <- return response here (possibly a redirect to login page?)
 
     return wrapper_function

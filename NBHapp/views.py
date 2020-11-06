@@ -7,42 +7,54 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from .decorators import unauthenticated_user, allowed_users, admin_only
+from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegisterForm
 
 
 @unauthenticated_user
 def register(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user =requests.get('https://api/v1/user/register').json()
-            username = form.cleaned_data.get('username')
-            messages.success(request, 'Account was successfully created for ' + username)
-            return redirect('login')
-    context = {'form':form}
-    return render(request , 'registration/registration_form.html', context)
-    return render(request, 'registration/register.html')
+    form = UserRegisterForm()
 
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
+            return redirect('login')
+
+
+    context = {'form':form}
+    return render(request, 'registration/register.html', context)
+
+# =========== Login
 @unauthenticated_user
 def login(request):
+
     if request.method == 'POST':
-        emailAddress = request.POST.get('username')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=emailAddress, password=password)
-        user = request.get('https://api/v1/user/login').json()
+
+        user = authenticate(request, username=username, password=password)
+
         if user is not None:
-            login(request, user)
-            return redirect('')
+            auth_login (request, user)
+            return redirect('hood')
         else:
-            messages.info(request, 'Username or Password is incorrect for user - ' + username)
+            message.info(request, 'Username Or Password is incorrect')    
+    
     context = {}
     return render(request, 'registration/login.html', context)
 
-@login_required(login_url='login')
+# ============ Logout user
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+# ============ Profile page
+def userPage(request):
+    context = {}
+    return render(request, 'profile.html', context)
 
 
 @login_required(login_url='registration/login/')
@@ -58,9 +70,7 @@ def User(request):
     return render(request, 'eachhood.html', context)
 
 
-def home(request):
-    
-    return render(request, 'home.html')
+
 
 
 @login_required(login_url='registration/login/')
