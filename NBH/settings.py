@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'NBHapp',
     'bootstrap4',
-    'crispy_forms'   
+    'cloudinary',
+    'crispy_forms',  
     
 ]
 
@@ -73,7 +74,7 @@ ROOT_URLCONF = 'NBH.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'NBHapp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

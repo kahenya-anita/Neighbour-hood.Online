@@ -1,5 +1,6 @@
+
 {% load static %} 
-{% load cloudinary %}
+
 
 {% block content %}
 <!doctype html>
@@ -180,7 +181,7 @@
                 <div class="banner-text ">
                     <h5 class=" ">Dream Comes True With <br>Our Talented Architect</h5>
                     <p class=" ">Creating the neighbourhood of your dreams involves synchronizing a multitude of components perfectly.</p>
-                    <a href="services.html" class="btn logo-button top-margin">Read More</a>
+                    <a href="{% url 'hood' %}" class="btn logo-button top-margin">Move In</a>
                 </div>
             </div>
 
@@ -263,7 +264,7 @@
                         <h2 class="footer-title-29">Contact Us</h2>
                         <ul>
                             <li>
-                                <p><span class="fa fa-map-marker"></span> Exterior Art, #32841 block, #221DRS Real Exterior Art building, KE.</p>
+                                <p><span class="fa fa-map-marker"></span> Neighbour-hod, #32841 block, #221DRS Real Estate building, KE.</p>
                             </li>
                             <li><a href="tel:+7-800-999-800"><span class="fa fa-phone"></span> +(254)-75-999-8888</a></li>
                             <li><a href="mailto:estate-mail@support.com" class="mail"><span class="fa fa-envelope-open-o"></span> Hood-mail@support.com</a></li>
@@ -303,7 +304,6 @@
                     <div class="footer-list-29 footer-4">
                         <ul>
                             <h6 class="footer-title-29">Quick Links</h6>
-                            <li><a href="#pages">Register as Admin</a></li>
                             <li><a href="#pages">Register as Business</a></li>
                             <li><a href="#pages">Register as Tenant</a></li>
                             <li><a href="#pages">Hoods</a></li>

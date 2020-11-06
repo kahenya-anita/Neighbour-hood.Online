@@ -1,14 +1,14 @@
-from django.contrib.auth.decorators import login_required 
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import *
-from django.contrib.auth import login, authenticate
-from .models import *
-from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate, logout
-from .decorators import unauthenticated_user, allowed_users, admin_only
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
 from django.contrib.auth.forms import UserCreationForm
+from .models import *
 from .forms import UserRegisterForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login , logout
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
+from . decorators import unauthenticated_user
 
 
 @unauthenticated_user
@@ -27,7 +27,7 @@ def register(request):
     context = {'form':form}
     return render(request, 'registration/register.html', context)
 
-# =========== Login
+
 @unauthenticated_user
 def login(request):
 
@@ -41,10 +41,11 @@ def login(request):
             auth_login (request, user)
             return redirect('hood')
         else:
-            message.info(request, 'Username Or Password is incorrect')    
+            messages.info(request, 'Username Or Password is incorrect')    
     
     context = {}
     return render(request, 'registration/login.html', context)
+
 
 # ============ Logout user
 def logoutUser(request):
