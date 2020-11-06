@@ -97,7 +97,8 @@ def create_hood(request):
         else:
             return False
     return render(request, 'hood.html', {'form':NeighbourHoodForm, 'form_s':HoodForm})
-    
+ 
+ ## ===Add Bizz   
 @login_required(login_url='registration/login/')
 def add_biz(request):
     user = User.objects.filter(id = request.user.id).first()
@@ -110,34 +111,33 @@ def add_biz(request):
         return redirect('eachhood.html')
     else:
         business_form = AddBusinessForm()
-    return render(request,'biz.html',{'business_form':business_form})
+    return render(request,'Bizz/New_biz.html',{'business_form':business_form})
+
+## ==Change Hood
+def change_neighborhood(request,neighborhood_id):
+    profile = UserProfile.objects.filter(user = request.user).first()
+    neighborhood = Neighborhood.objects.get(id=neighborhood_id)
+    profile.neighborhood = neighborhood
+    profile.save()
+    return redirect(reverse('neighborhood',args=[neighborhood.id]))
+
+## =====Search Bizz
+def search(request):
+    try:
+        if 'business' in request.GET and request.GET['business']:
+            search_term = request.GET.get('business')
+            searched_business = Business.objects.get(name__icontains=search_term)
+            return render(request,'search.html',{'searched_business':searched_business})
+    except (ValueError,Business.DoesNotExist):
+        message = "Oops! We couldn't find the business you're looking for."
+        return render(request,'search.html',{'message':message})
+    return render(request,'search.html',{'message':message,'searched_business':searched_business})
+
      
 
 
 
 
-# #====POSTS
-# # creating posts
-# def create_post(request, neighbourhood_id):
-#     hood = NeighbourHood.objects.get(id=hood_id) # without endpoint
-#     hood = requests.get('http://..../{:s}'.format(neighbourhood_id)).json()
-#     if request.method == 'POST':
-#         form = PostForm(request.POST)
-#         data = {}
-#         if form.is_valid():
-#             data = form.data
-#             post = json.dumps(data)
-#             requests.post('https://new', post)
-#             print(post)
-#             messages.success(request, 'New post was added Successfully')
-#             return redirect('post')
-#         else:
-#             form = PostForm()
-#     context = {
-#         'form': form,
-#         'hood': hood
-#     }
-#     return render(request, 'post.html', context)
 
 
 # # ======Business View

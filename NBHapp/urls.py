@@ -10,8 +10,11 @@ urlpatterns = [
     
     path('', views.home, name = 'home'),
     path('user/', views.userPage, name = 'user-page'),
+    
     path('hood/', views.hood, name = 'hood'),
-    path('create_businee/', views.create_business, name = 'bizz'),
+    path('add_bizz/', views.create_business, name = 'add_bizz'),
+    path('change_neighborhood/<int:id>/',views.change_neighborhood,name='change_neighborhood'),
+
 
     path('estate/<int:id>/', views.estate, name = 'each-hood'),
     
