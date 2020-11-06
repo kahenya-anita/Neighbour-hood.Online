@@ -80,7 +80,22 @@ def estate(request, id):
 #=========Creating a Neighbourhood
 @login_required
 def create_hood(request):
+    userX = request.user
     
+    if request.method =="POST":
+        form = NeighbourHoodForm(request.POST, request.FILES)
+        form_s = HoodForm(request.POST, request.FILES)
+        
+        if form_s.is_valid and form.is_valid():
+            data_s = form_s.save()
+            data = form.save(commit=False)
+            data.user = userx
+            data.hood = data_s
+            data.save()
+            return redirect('hood')
+        else:
+            return False
+    return render(request, 'hood.html', 'form':NeighbourHoodForm, 'form_s':HoodForm)
     
 
 # creating single neigbourhood
