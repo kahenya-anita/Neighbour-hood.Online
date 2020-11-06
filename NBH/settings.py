@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
+import cloudinary
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,13 +43,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'NBHapp',
-    'crispy_forms'
-
-    
+    'crispy_forms'   
     
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+cloudinary.config(
+    cloud_name = 'dsoltjf12',
+    api_key = '381748421442872',
+    api_secret = '9PTjvOSMcaa22_cCSlpx3m8sa0I',
+)
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

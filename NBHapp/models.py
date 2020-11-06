@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+from cloudinary.models import CloudinaryField
+
+
 
 # String values are specified as --> Charfield .
 # DateTimeField --> Lets THe user know when a specific Item was loaded.
@@ -14,7 +16,7 @@ class Neighbourhood(models.Model):
     description=models.CharField(max_length=400, null=True)
     location=models.CharField(max_length=200, null=True)
     population=models.IntegerField()
-    image = models.ImageField(upload_to = 'images/', null = True, blank = True)
+    image = models.CloudinaryField(upload_to = 'images/', null = True, blank = True)
 
     def __str__(self):
         return self.name
@@ -30,7 +32,7 @@ class Profile(models.Model):
     name=models.CharField(max_length=60, null=True)
     bio=models.CharField(max_length=300, null=True)
     hood = models.ForeignKey('Neighbourhood', max_length=200, on_delete=models.CASCADE, null=True)
-    image=models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image=models.CloudinaryField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
         return self.name
@@ -48,7 +50,7 @@ class Business(models.Model):
     description=models.CharField(max_length=400, null=True)
     neighborhood=models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
     email=models.EmailField()
-    image = models.ImageField(upload_to = 'business/', null = True, blank = True)
+    image = models.CloudinaryField(upload_to = 'business/', null = True, blank = True)
 
     def __str__(self):
         return self.name
@@ -63,7 +65,7 @@ class Business(models.Model):
 class Post(models.Model):
     post=models.CharField(max_length=200)
     neighborhood=models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
-    image=models.ImageField(default='default.jpg', upload_to='posts')
+    image=models.CloudinaryField(default='default.jpg', upload_to='posts')
 
     def __str__(self):
         return self.post
