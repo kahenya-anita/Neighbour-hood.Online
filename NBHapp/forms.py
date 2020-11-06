@@ -19,3 +19,19 @@ class Hood(forms.ModelForm):
     class Meta:
         model = Hood
         fields = '__all__'
+        
+
+class UpdateProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('first_name','last_name','location')
+
+class AddBusinessForm(ModelForm):
+    class Meta:
+        model = Business
+        fields = ('name','email','business_location')
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title','post_description',)
