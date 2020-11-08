@@ -24,28 +24,29 @@ class Neighbourhood(models.Model):
     def __str__(self):
         return self.name
 
-    def create_neigborhood(self):
+    def create_neigbourhood(self):
         self.save()
 
-    def delete_neigborhood(self):
+    def delete_neigbourhood(self):
         self.delete()
 
     @classmethod
-    def find_neighborhood(cls,neighborhood_id):
-        neighborhood = cls.objects.get(id=neighborhood_id)
-        return neighborhood
+    def find_neighbourhood(cls,id):
+        neighbourhood = cls.objects.get(id=id)
+        return neighbourhood
 
-    def update_neighborhood(self,name):
+    def update_neighbourhood(self,name):
         self.name = name
         self.save()
 
 
     def __str__(self):
-        return f'{self.neighborhood_name}'
+        return f'{self.name}'
 
 
 class Profile(models.Model):
     name = models.CharField(max_length=60, null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     bio = models.CharField(max_length=300, null=True)
     hood = models.ForeignKey('Neighbourhood', max_length=200, on_delete=models.CASCADE, null=True)
     image = CloudinaryField(default='default.jpg')
@@ -61,7 +62,7 @@ class Profile(models.Model):
 
 
 class Business(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=60, null=True)
     description=models.CharField(max_length=400, null=True)
     neighbourhood=models.ForeignKey('Neighbourhood' ,on_delete=models.CASCADE)
@@ -96,7 +97,7 @@ class Post(models.Model):
     image= CloudinaryField(default='default.jpg')
 
     def __str__(self):
-        return f'{self.title},{self.neighbourhood.neighbourhood_name}'
+        return self.name
 
     def save_post(self):
         self.save

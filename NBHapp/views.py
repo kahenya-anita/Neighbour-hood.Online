@@ -53,7 +53,8 @@ def logoutUser(request):
     return redirect('login')
 
 # ============ Profile page
-def userPage(request, user_id):
+@login_required(login_url='register/login/')
+def Profile(request, user_id):
     user = User.objects.get(id = user_id)
     profile = UserProfile.objects.filter(user = user).first()
     if request.method == 'POST':
@@ -80,24 +81,24 @@ def home(request):
     return render(request, 'home.html')
 
 # ============ View for list of neighbour hoods to display
-@login_required(login_url='login')
+@login_required(login_url='register/login/')
 def hood(request):
     neighbourhoods = Neighbourhood.objects.all()
     return render(request, 'hood.html', {'neighbourhoods':neighbourhoods} )
 
 
 # =========== For Each neighbour hood
-@login_required
+@login_required(login_url='register/login/')
 def estate(request, id):
     neighbourhoods = Neighbourhood.objects.get(id =id)
-    businessa = Business.objects.get(id =id)
+    business = Business.objects.get(id =id)
     hood = Neighbourhood.objects.get(id =id)
 
-    context = {'hood': hood,'businessa':businessa, 'neighbourhoods':neighbourhoods}
+    context = {'hood': hood, 'business':business, 'neighbourhoods':neighbourhoods}
     return render(request, 'eachhood.html', context)
 
 #=========Creating a Neighbourhood
-@login_required
+@login_required(login_url='register/login/')
 def create_hood(request):
     userX = request.user
     
@@ -117,7 +118,7 @@ def create_hood(request):
     return render(request, 'hood.html', {'form':NeighbourHoodForm, 'form_s':HoodForm})
  
  ## ===Add Bizz   
-@login_required(login_url='registration/login/')
+@login_required(login_url='register/login/')
 def add_biz(request):
     user = User.objects.filter(id = request.user.id).first()
     profile = UserProfile.objects.filter(user = user).first()

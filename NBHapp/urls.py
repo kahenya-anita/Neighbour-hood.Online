@@ -18,7 +18,7 @@ urlpatterns = [
     path('estate/<int:id>/', views.estate, name = 'each-hood'),
     
 
-    path('userPage/<int:id>/', views.userPage, name = 'profile'),
+    path('Profile/<int:id>/', views.Profile, name = 'profile'),
     path('search/', views.search, name = 'search'),
 
 ]

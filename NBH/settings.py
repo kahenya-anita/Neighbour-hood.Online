@@ -55,7 +55,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 cloudinary.config(
-    cloudinary_name = config('CLOUDINARY_CLOUD_NAME'), 
+    cloud_name = config('CLOUDINARY_CLOUD_NAME'), 
     api_key = config('CLOUDINARY_API_KEY'), 
     api_secret = config('CLOUDINARY_API_SECRET'), 
 )

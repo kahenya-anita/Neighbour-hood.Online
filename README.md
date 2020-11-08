@@ -15,6 +15,7 @@ This is a web application that allows you to be in the loop about everything hap
 ![Screenshot from 2020-11-06 15-10-42](https://user-images.githubusercontent.com/62019551/98364851-8c608c00-2042-11eb-8452-fad3be93e2a2.png)
 
 ## API-Endpoints
+[https://neighbourhood-service.herokuapp.com/swagger-ui.html](https://neighbourhood-service.herokuapp.com/swagger-ui.html)
 ### User Controller
 [/api/v1/User/register](https:///api/v1/User/register)
 * This endpoint return all the user profiles with information such:
@@ -58,29 +59,29 @@ Then run server with the above command
 Or you can access the web application directly via this [LINK.](/https://anitanbh.herokuapp.com/)
 *****
 ## Dependencies
-Django-Heroku
-Python-Decouple
-Whitenoise
-pillow
-Django-Admin
-Django-Registration
-Django-UUIDField
-Dj-Database-Url
-Cloudinary
-Django-Rest-Framework
+- Django-Heroku
+- Python-Decouple
+- Whitenoise
+- pillow
+- Django-Admin
+- Django-Registration
+- Django-UUIDField
+- Dj-Database-Url
+- Cloudinary
+- Django-Rest-Framework
 *****
 ## Technologies Used
-Python 3
-MdBootstrap
-HTML
-CSS
-Django 3
-JavaScript
-Jquery
+1. Python 3
+2. MdBootstrap
+3. HTML
+4. CSS
+5. Django 3
+6. JavaScript
+7. Jquery
 *****
 ## Contact Information
-Email : anitakahenya1@gmail.com
-Slack : Anita Kahenya
+* Email : anitakahenya1@gmail.com
+* Slack : Anita Kahenya
 *****
 ## [License](LICENSE)
 MIT License
