@@ -1,25 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import cloudinary
 from cloudinary.models import CloudinaryField
 
 
-class Hood(models.Model):
-    image_1 = CloudinaryField('image')
-    image_2 = CloudinaryField('image')
-    image_3 = CloudinaryField('image')
+
     
     
 class Neighbourhood(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey('Profile', null=True, blank=True, on_delete=models.CASCADE)
     name=models.CharField(max_length=60, null=True)
     description=models.CharField(max_length=400, null=True)
     location=models.CharField(max_length=200, null=True)
     population=models.IntegerField()
     image = CloudinaryField( null = True, blank = True)
-    hoods = models.ForeignKey(Hood, on_delete=models.CASCADE, related_name='neighbourhood_images')
 
     def __str__(self):
         return self.name
@@ -43,31 +40,25 @@ class Neighbourhood(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-
 class Profile(models.Model):
-    name = models.CharField(max_length=60, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    bio = models.CharField(max_length=300, null=True)
-    hood = models.ForeignKey('Neighbourhood', max_length=200, on_delete=models.CASCADE, null=True)
-    image = CloudinaryField(default='default.jpg')
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(max_length=254, blank=True)
+    image =CloudinaryField(default='default.jpg')
+    hood = models.ForeignKey(Neighbourhood, on_delete=models.SET_NULL, null=True, related_name='users', blank=True)
+    
     def __str__(self):
-        return self.name
-
-    def create_profile(self):
-        self.save()
-
-    def delete_profile(self):
-        self.delete()
+        return f'{self.user.username} profile'
+    
+    
 
 
 class Business(models.Model):
-    owner = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name=models.CharField(max_length=60, null=True)
     description=models.CharField(max_length=400, null=True)
-    neighbourhood=models.ForeignKey('Neighbourhood' ,on_delete=models.CASCADE)
+    neighborhood=models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
     email=models.EmailField()
-    image = CloudinaryField( null = True, blank = True)
+    image =CloudinaryField(default='default.jpg')
 
     def __str__(self):
         return self.name
@@ -77,15 +68,6 @@ class Business(models.Model):
 
     def delete_business(self):
         self.delete()
-        
-    @classmethod
-    def find_business(cls,business_id):
-        business = cls.objects.get(id=business_id)
-        return business
-
-    def update_business(self,name):
-        self.name = name
-        self.save()
 
 
 class Post(models.Model):

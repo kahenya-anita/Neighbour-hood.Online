@@ -32,7 +32,7 @@
                             <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s"><strong>Welcome to {{ hood.name }} </strong></h1>
                             <hr class="hr-light my-4 wow fadeInDown" data-wow-delay="0.4s">
                             <h5 class="text-uppercase mb-4 white-text wow fadeInDown" data-wow-delay="0.4s"><strong> {{hood.description}} </strong></h5>
-                            <a class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s">View</a>
+                            <a class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s" href="{% url 'hood' %}">Change Hood</a>
 
                         </div>
                         <!--Grid column-->
@@ -49,9 +49,9 @@
 </div>
 <!-- Card -->
 <div class="d-flex justify-content-start ">
-    <a href=" {% url 'hood' %} ">
+    <a href="{% url 'logout'%}">
         <!--Light blue-->
-        <button type="button " class="btn btn-light-blue ">Move Out</button>
+        <button type="button " class="btn btn-light-blue ">Logout</button>
     </a>
 </div>
 

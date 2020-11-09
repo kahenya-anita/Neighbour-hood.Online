@@ -16,23 +16,19 @@ class NeighbourhoodForm(forms.ModelForm):
         model = Neighbourhood
         fields = ['name', 'description', 'location', 'population', 'image']
 
-class Hood(forms.ModelForm):
+class CreateProfileForm(ModelForm):
     class Meta:
-        model = Hood
-        fields = '__all__'
-        
+        model = Profile
+        exclude = ['user']
 
 class UpdateProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ('name','hood')
+        fields = ('hood','bio')
 
-class AddBusinessForm(ModelForm):
-    class Meta:
-        model = Business
-        fields = ('name','email','neighbourhood')
+
 
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ('title','post_description',)
+        fields = ('title','image','post_description','posted_by')

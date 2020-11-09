@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse ,HttpResponseRedirect, Http404
 
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from . decorators import unauthenticated_user
+from .forms import *
 
 
 @unauthenticated_user
@@ -39,7 +40,7 @@ def login(request):
 
         if user is not None:
             auth_login (request, user)
-            return redirect('hood')
+            return redirect('create_profile')
         else:
             messages.info(request, 'Username Or Password is incorrect')    
     
@@ -54,28 +55,36 @@ def logoutUser(request):
 
 # ============ Profile page
 @login_required(login_url='register/login/')
-def Profile(request, user_id):
-    user = User.objects.get(id = user_id)
-    profile = UserProfile.objects.filter(user = user).first()
+def EditProfile(request, username):
+    try:
+        user = get_object_or_404(User,username = username)
+        profile = Profile.objects.get(user = user)
+        title = profile.user.username
+    except Profile.DoesNotExist:
+        raise Http404()        
+    return render(request, "profile.html", {"profile": profile, "title": title})
+
+@login_required(login_url='register/login/')
+def create_profile(request):
+    title = "NHood"
+    current_user = request.user
+    title = "Create Profile"
     if request.method == 'POST':
-        form = UpdateProfileForm(request.POST,instance=profile)
+        form = CreateProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            profile.name = request.POST['name']
-            profile.bio = request.POST['bio']
-            profile.hood = request.POST['hood']
-            profile.image = request.POST['image']
-
+            profile = form.save(commit=False)
+            profile.user = current_user
             profile.save()
-        return redirect(reverse('profile',args=[user.id]))
+        return HttpResponseRedirect('/')
+
     else:
-        form = UpdateProfileForm(instance=profile)
-
-    businesses = Business.objects.filter(owner = user).all()
-    neighborhoods = Neighborhood.objects.all()
-
-    return render(request,'profile.html',{'neighborhoods':neighborhoods,'businesses':businesses,'profile':profile,'form':form})
+        form = CreateProfileForm()
+    return render(request, 'create_profile.html', {"form": CreateProfileForm, "title": title})       
 
 
+
+
+    
 # ============ Home Page
 def home(request):
     return render(request, 'home.html')
@@ -91,32 +100,13 @@ def hood(request):
 @login_required(login_url='register/login/')
 def estate(request, id):
     neighbourhoods = Neighbourhood.objects.get(id =id)
-    business = Business.objects.get(id =id)
+    #businessa = Business.objects.get(id =id)
     hood = Neighbourhood.objects.get(id =id)
 
-    context = {'hood': hood, 'business':business, 'neighbourhoods':neighbourhoods}
+    context = {'hood': hood, 'neighbourhoods':neighbourhoods}
     return render(request, 'eachhood.html', context)
-
-#=========Creating a Neighbourhood
-@login_required(login_url='register/login/')
-def create_hood(request):
-    userX = request.user
     
-    if request.method =="POST":
-        form = NeighbourHoodForm(request.POST, request.FILES)
-        form_s = HoodForm(request.POST, request.FILES)
-        
-        if form_s.is_valid and form.is_valid():
-            data_s = form_s.save()
-            data = form.save(commit=False)
-            data.user = userx
-            data.hood = data_s
-            data.save()
-            return redirect('hood')
-        else:
-            return False
-    return render(request, 'hood.html', {'form':NeighbourHoodForm, 'form_s':HoodForm})
- 
+
  ## ===Add Bizz   
 @login_required(login_url='register/login/')
 def add_biz(request):
@@ -160,57 +150,3 @@ def search(request):
 
 
 
-# # ======Business View
-# # creating Businesses
-# @login_required(login_url='registration/login/')
-# def create_business(request, business_id):
-#     business = Business.objects.get(id=business_id) # without endpoint
-#     business = requests.get('http://api/v1/business/create'.format(business_id)).json()
-#     if request.method == 'POST':
-#         form = PostForm(request.POST)
-#         data = {}
-#         if form.is_valid():
-#             data = form.data
-#             post = json.dumps(data)
-#             requests.post('https://api/v1/business/find', post)
-#             print(post)
-#             messages.success(request, 'New business was added Successfully')
-#             return redirect('post')
-#         else:
-#             form = PostForm()
-#     context = {
-#         'form': form,
-#         'hood': hood
-#     }
-#     return render(request, 'Bizz/New_bizz.html', context)
-
-# # update  business function
-# @login_required(login_url='registration/login/')
-# def Business_update(request,business_id):
-#     business = requests.get('http://api/v1/business/find'.format(business_id)).json() 
-#     url ='https://api/v1/business/update '
-#     business['business_id']=business_id
-#     post_data = json.dumps(user)
-#     requests.post(url, post_data)
-#     return HttpResponseRedirect('hood')
-#     context = {
-#         'business':business
-#     }
-
-# #Delete business function
-# @login_required(login_url='registration/login/')
-# def Business_Delete(request,user_id):
-#     user = requests.get('https://api/v1/business/find'.format(business_id)).json() 
-#     print(user) 
-#     url ='https://api/v1/business/delete' 
-#     user['user_id']= user_id;
-#     post_data = json.dumps(user)
-#     print("\n see who i want to delete \n" + post_data)
-#     requests.Delete(url, post_data)
-#     return HttpResponseRedirect('hood.html') 
-#     context = {
-#         'user':user
-#     }
-
-
- 

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'NBHapp',
     'bootstrap4',
     'cloudinary',
-    'crispy_forms',  
+    'crispy_forms',
+     
     
 ]
 

@@ -52,7 +52,7 @@
                                 <a class="nav-link" href="/admin">Admin</a>
                             </li>
                             <li class="nav-item @@services__active">
-                                <a class="nav-link" href="{% url 'profile' request.user.id %}">Profile</a>
+                                <a class="nav-link" href="{% url 'EditProfile' request.user.username %}">Profile</a>
                             </li>
                             <li class="nav-item @@contact__active">
                                 <a class="nav-link" href=" {% url 'logout' %} ">Logout</a>

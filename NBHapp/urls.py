@@ -12,13 +12,11 @@ urlpatterns = [
     
     path('hood/', views.hood, name = 'hood'),
     path('add_biz/', views.add_biz, name = 'add_biz'),
-    #path('change_neighbourhood/<int:id>/',views.change_neighbourhood, name='change_neighborhood'),
+    path('Post/<int:id>/create-post/',views.Post, name='post'),
 
-
+    path('create_profile/',views.create_profile,name = 'create_profile'),
+    path('EditProfile/<username>/',views.EditProfile,name = 'EditProfile'),
     path('estate/<int:id>/', views.estate, name = 'each-hood'),
-    
-
-    path('Profile/<int:id>/', views.Profile, name = 'profile'),
     path('search/', views.search, name = 'search'),
 
 ]
