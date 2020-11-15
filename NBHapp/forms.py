@@ -21,10 +21,10 @@ class CreateProfileForm(ModelForm):
         model = Profile
         exclude = ['user']
 
-class UpdateProfileForm(ModelForm):
+class EditProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ('hood','bio')
+        exclude = ['user', 'hood']
 
 
 

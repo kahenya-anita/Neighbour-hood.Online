@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 {% load cloudinary %}
 {% load static %} 
+{% load bootstrap4 %} 
 
 {% block content %}
 <style>
@@ -108,4 +109,11 @@ body{
         <img src="{{ user.profile.image.url }}"/>
     </div>
 </div>
+
+<form method="POST" enctype="multipart/form-data">
+    <h2 class="font-weight-bold mt-3" style="text-decoration: solid;color:white;">Profile Edit</h2>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-sm btn-outline-blue">Update</button>
+</form>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse ,HttpResponseRedirect, Http404
+from django.urls import reverse
 
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
@@ -12,7 +13,6 @@ from . decorators import unauthenticated_user
 from .forms import *
 
 
-@unauthenticated_user
 def register(request):
     form = UserRegisterForm()
 
@@ -29,7 +29,6 @@ def register(request):
     return render(request, 'registration/register.html', context)
 
 
-@unauthenticated_user
 def login(request):
 
     if request.method == 'POST':
@@ -49,20 +48,30 @@ def login(request):
 
 
 # ============ Logout user
+@login_required
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
 # ============ Profile page
-@login_required(login_url='register/login/')
-def EditProfile(request, username):
-    try:
-        user = get_object_or_404(User,username = username)
-        profile = Profile.objects.get(user = user)
-        title = profile.user.username
-    except Profile.DoesNotExist:
-        raise Http404()        
-    return render(request, "profile.html", {"profile": profile, "title": title})
+
+@login_required
+def EditProfile(request,username):
+    user = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user = user)
+    form = EditProfileForm(instance=profile)
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = user
+            data.hood = profile.hood
+            data.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            form = EditProfileForm(instance=profile)
+    legend = 'Edit Profile'
+    return render(request, 'profile.html', {'legend':legend, 'form':EditProfileForm})
 
 @login_required(login_url='register/login/')
 def create_profile(request):
@@ -86,6 +95,7 @@ def create_profile(request):
 
     
 # ============ Home Page
+@login_required(login_url='register/login/')
 def home(request):
     return render(request, 'home.html')
 
